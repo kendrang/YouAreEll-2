@@ -20,27 +20,22 @@ public class YouAreEll {
     // setting the class variables equals to the variables being passed in
     //injecting dependencies
 
+
     public static void main(String[] args) {
         // hmm: is this Dependency Injection?
         YouAreEll urlhandler = new YouAreEll(new MessageController(), new IdController());
-        System.out.println(urlhandler.MakeURLCall("/ids", "GET", ""));
-        System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
+
+//        System.out.println(urlhandler. MakeURLCall("/ids", "GET", ""));
+//        System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
     }
 
-    public String get_ids() {
-        return MakeURLCall("/ids", "GET", "");
-    }
+//    public String get_ids() {
+//        return MakeURLCall("/ids", "GET", "");
+//    }
+//
+//    public String get_messages() {
+//        return MakeURLCall("/messages", "GET", "");
+//    }
 
-    public String get_messages() {
-        return MakeURLCall("/messages", "GET", "");
-    }
 
-    public String MakeURLCall(String mainurl, String method, String jpayload) {
-
-        HttpResponse<JsonNode> jsonResponse
-                = Unirest.get(mainUrl + "/ids")
-                .header("accept", "application/json")
-                .asJson();
-        return jsonResponse.getBody().toString();
-    }
 }
