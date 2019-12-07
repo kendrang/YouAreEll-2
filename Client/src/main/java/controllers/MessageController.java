@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.Id;
 import models.Message;
+import youareell.YouAreEll;
 
 public class MessageController {
 
@@ -18,10 +19,8 @@ public class MessageController {
     // why a HashSet??
 
     public ArrayList<Message> getMessages() {
-
-        String messages =  transactionController.makeURLCall("/messages", "GET", "");
         Type listType = new TypeToken<List<Message>>(){}.getType();
-        return new Gson().fromJson(messages, listType);
+        return new Gson().fromJson(YouAreEll.get_messages(), listType);
     }
     public ArrayList<Message> getMessagesForId(Id Id) {
 

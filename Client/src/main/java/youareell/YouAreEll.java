@@ -23,10 +23,10 @@ public class YouAreEll {
 
     public static void main(String[] args) {
         // hmm: is this Dependency Injection?
-        YouAreEll urlhandler = new YouAreEll(new MessageController(), new IdController());
-
-//        System.out.println(urlhandler. MakeURLCall("/ids", "GET", ""));
-//        System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
+//        YouAreEll urlhandler = new YouAreEll(new MessageController(), new IdController());
+        TransactionController tra = new TransactionController();
+        System.out.println(tra.makeURLCall("/ids", "GET", ""));
+        System.out.println(tra.makeURLCall("/messages", "GET", ""));
     }
 
     public static String get_ids() {
