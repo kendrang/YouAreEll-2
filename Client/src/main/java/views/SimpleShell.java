@@ -9,6 +9,8 @@ import java.util.List;
 
 import controllers.IdController;
 import controllers.MessageController;
+import controllers.TransactionController;
+import models.Id;
 import youareell.YouAreEll;
 
 // Simple Shell is a Console view for youareell.YouAreEll.
@@ -19,9 +21,11 @@ public class SimpleShell {
         // yep, make an effort to format things nicely, eh?
         System.out.println(output);
     }
-    public static void main(String[] args) throws java.io.IOException {
+    public static void main(String[] args) throws IOException {
 
         YouAreEll webber = new YouAreEll(new MessageController(), new IdController());
+        TransactionController transCtrl = new TransactionController();
+        IdController idCtrl = new IdController();
         
         String commandLine;
         BufferedReader console = new BufferedReader
@@ -67,9 +71,27 @@ public class SimpleShell {
                 // Specific Commands.
 
                 // ids
+//                if (list.contains("ids")) {
+//                    String results = webber.get_ids();
+//                    SimpleShell.prettyPrint(results);
+//                    continue;
+//                }
+                if (list.contains("ids") && list.size() == 3) {
+                    Id foundId = idCtrl.getIdByGit(list.get(2)) ;
+                    if (foundId == null) {
+                        idCtrl.postId(new Id(list.get(1), list.get(2)));
+                    } else {
+                        String newName = list.get(2);
+                        foundId.setName(newName);
+                        idCtrl.putId(foundId);
+                    }
+                    continue;
+                }
                 if (list.contains("ids")) {
-                    String results = webber.get_ids();
-                    SimpleShell.prettyPrint(results);
+                    ArrayList<Id> results = idCtrl.parseIds(webber.get_ids());
+                    for(Id idFin : results){
+                    SimpleShell.prettyPrint("USER ID : "+ idFin.getUserid()+ "\n" +"GITHUB : "+idFin.getGithub() + " NAME : " + idFin.getName() + "\n==========\n");
+                    }
                     continue;
                 }
 
