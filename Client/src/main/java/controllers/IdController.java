@@ -8,8 +8,10 @@ import java.util.stream.Collectors;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.Id;
+import youareell.YouAreEll;
 
 public class IdController {
+
 
     private  TransactionController transactionController = new TransactionController();
     Id myId;
@@ -32,8 +34,16 @@ public class IdController {
         transactionController.makeURLCall("/ids","PUT", payload);
         return id;
     }
-    public Id getIdByGit(String githubid){
-        return parseIds("").stream().filter(id -> id.getGithub().equals(githubid)).collect(Collectors.toList()).get(0);
-    }
- 
+
+public Id getIdByGit(String gitId) {
+    ArrayList<Id> idList = parseIds(YouAreEll.get_ids());
+    Id foundId = null;
+
+    for (Id idInList : idList) {
+        if (gitId.equals(idInList.getGithub())) {
+            foundId = idInList;
+            break;
+        }
+    } return foundId;
+}
 }

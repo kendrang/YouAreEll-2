@@ -33,6 +33,7 @@ public class MessageController {
     public Message getMessageForSequence(String seq) {
         return null;
     }
+
     public ArrayList<Message> getMessagesFromFriend(Id myId, Id friendId) {
         String targetId = myId.getGithub();
         String friendIdGit = friendId.getGithub();

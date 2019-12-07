@@ -11,6 +11,7 @@ import controllers.IdController;
 import controllers.MessageController;
 import controllers.TransactionController;
 import models.Id;
+import models.Message;
 import youareell.YouAreEll;
 
 // Simple Shell is a Console view for youareell.YouAreEll.
@@ -26,6 +27,7 @@ public class SimpleShell {
         YouAreEll webber = new YouAreEll(new MessageController(), new IdController());
         TransactionController transCtrl = new TransactionController();
         IdController idCtrl = new IdController();
+        MessageController msgCtrl = new MessageController();
         
         String commandLine;
         BufferedReader console = new BufferedReader
@@ -96,9 +98,52 @@ public class SimpleShell {
                 }
 
                 // messages
+//                if (list.contains("messages")) {
+//                    String results = webber.get_messages();
+//                    SimpleShell.prettyPrint(results);
+//                    continue;
+//                }
+
+                if (list.contains("send") && list.contains("to")) {
+                    String[] messageArr = commandLine.split("'");
+                    String messageText = messageArr[1];
+                    String fromGitId = list.get(1);
+                    String toGitId = list.get(list.size()-1);
+
+                    Id fromid = idCtrl.getIdByGit(fromGitId);
+                    Id toid = idCtrl.getIdByGit(toGitId);
+
+                    Message message = new Message(messageText, fromGitId, toGitId);
+                    msgCtrl.postMessage(fromid, toid, message);
+                    continue;
+                }
+                if (list.contains("send")) {
+                    String[] messageArr = commandLine.split("'");
+                    String messageText = messageArr[1];
+                    String fromGitId = list.get(1);
+
+                    Id fromid = idCtrl.getIdByGit(fromGitId);
+
+                    Message message = new Message(messageText, fromGitId , "");
+                    msgCtrl.postMessage(fromid, null , message);
+                    continue;
+                }
+                if (list.contains("messages") && list.size() == 3) {
+                    Id myId = idCtrl.getIdByGit(list.get(1));
+                    Id friendId = idCtrl.getIdByGit(list.get(2));
+                    ArrayList<Message> messages = msgCtrl.getMessagesFromFriend(myId, friendId);
+                    SimpleShell.prettyPrint(messages.toString());
+                    continue;
+                }
+                if (list.contains("messages") && list.size() == 2) {
+                    Id foundId = idCtrl.getIdByGit(list.get(1));
+                    ArrayList<Message> messages = msgCtrl.getMessagesForId(foundId);
+                    SimpleShell.prettyPrint(messages.toString());
+                    continue;
+                }
                 if (list.contains("messages")) {
-                    String results = webber.get_messages();
-                    SimpleShell.prettyPrint(results);
+                    ArrayList<Message> messages = msgCtrl.getMessages();
+                    SimpleShell.prettyPrint(messages.toString());
                     continue;
                 }
                 // you need to add a bunch more.

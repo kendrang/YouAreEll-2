@@ -29,11 +29,11 @@ public class YouAreEll {
 //        System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
     }
 
-    public String get_ids() {
+    public static String get_ids() {
         return new TransactionController().makeURLCall("/ids", "GET", "");
     }
 
-    public String get_messages() {
+    public static String get_messages() {
         return new TransactionController().makeURLCall("/messages", "GET", "");
     }
 
