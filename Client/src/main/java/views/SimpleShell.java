@@ -143,7 +143,7 @@ public class SimpleShell {
                 }
                 if (list.contains("messages")) {
                     ArrayList<Message> messages = msgCtrl.getMessages();
-                    SimpleShell.prettyPrint(messages.toString());
+                    msgCtrl.printMessages(messages);
                     continue;
                 }
                 // you need to add a bunch more.

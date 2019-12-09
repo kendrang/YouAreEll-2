@@ -47,5 +47,10 @@ public class MessageController {
         transactionController.makeURLCall("/ids/" + myGitHub + "/messages", "POST", payload);
         return msg;
     }
- 
+
+    public void printMessages(List<Message> messages) {
+        for (Message message : messages) {
+            System.out.println(message.getSequence() + message.getTimestamp() + " " + message.getFromid() + ":" + message.getMessage());
+        }
+    }
 }
